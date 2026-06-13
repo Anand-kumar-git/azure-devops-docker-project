@@ -1,0 +1,26 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: SSH@0
+  inputs:
+    sshEndpoint: 'azure-vm-ssh'
+    runOptions: 'commands'
+    commands: |
+      cd /home/azureuser/devops-webapp
+
+      git pull origin main
+
+      docker stop webapp || true
+      docker rm webapp || true
+
+      docker build -t azure-devops-webapp:v1 .
+
+      docker run -d \
+        --name webapp \
+        -p 80:80 \
+        azure-devops-webapp:v1
+    readyTimeout: '20000'
