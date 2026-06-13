@@ -8,13 +8,9 @@ steps:
 - task: SSH@0
   inputs:
     sshEndpoint: 'azure-vm-ssh'
-    runOptions: 'commands'
-    commands: |
-      whoami
-      pwd
-      ls -la /home/azureuser
-      ls -la /home/azureuser/devops-webapp
-      cd /home/azureuser/devops-webapp
-      pwd
+    runOptions: 'inline'
+    inline: |
+      cd /home/azureuser/devops-webapp && \
+      pwd && \
       git status
     readyTimeout: '20000'
