@@ -10,17 +10,9 @@ steps:
     sshEndpoint: 'azure-vm-ssh'
     runOptions: 'commands'
     commands: |
-      cd /home/azureuser/devops-webapp
-
-      git pull origin main
-
-      docker stop webapp || true
-      docker rm webapp || true
-
-      docker build -t azure-devops-webapp:v1 .
-
-      docker run -d \
-        --name webapp \
-        -p 80:80 \
-        azure-devops-webapp:v1
+      pwd
+      whoami
+      ls -la
+      ls -la /home/azureuser
+      ls -la /home/azureuser/devops-webapp
     readyTimeout: '20000'
