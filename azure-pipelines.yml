@@ -8,9 +8,13 @@ steps:
 - task: SSH@0
   inputs:
     sshEndpoint: 'azure-vm-ssh'
-    runOptions: 'inline'
-    inline: |
-      echo "Connected successfully"
-      hostname
+    runOptions: 'commands'
+    commands: |
+      whoami
       pwd
-      docker --version
+      ls -la /home/azureuser
+      ls -la /home/azureuser/devops-webapp
+      cd /home/azureuser/devops-webapp
+      pwd
+      git status
+    readyTimeout: '20000'
