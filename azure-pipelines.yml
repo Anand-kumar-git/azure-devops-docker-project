@@ -8,12 +8,20 @@ steps:
 - task: SSH@0
   inputs:
     sshEndpoint: 'Azure-VM-SSH'
-    runOptions: 'commands'
-    commands: |
-      cd ~/azure-devops-docker-project
+    runOptions: 'inline'
+    inline: |
+      cd /home/azureuser/azure-devops-docker-project
+
+      pwd
+      ls -la
+      git status
+
       git pull origin main
+
       docker build -t azure-web .
+
       docker stop azure-container || true
       docker rm azure-container || true
+
       docker run -d --name azure-container -p 80:80 azure-web
     readyTimeout: '20000'
